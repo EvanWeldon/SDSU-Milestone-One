@@ -5,11 +5,17 @@ const context = canvas.getContext('2d')
 canvas.width = 1280
 canvas.height = 720
 
-// creating a const for the level one map and importing the source
+// creating a const for the level one map and player and importing the sources
 const map1 = new Image()
 map1.src = './img/map1.png'
-console.log(map1)
+const player = new Image()
+player.src = './img/player.png'
 
+// arrow function to render the map onload *image is fit to canvas height and width by passing in more arguments* 
+//having trouble placing the player in correct spot so just threw him in the middle of canvas for now
 map1.onload = () => {
     context.drawImage(map1, 0, 0, canvas.width, canvas.height)
+    context.drawImage(player, canvas.width / 2, 0)
 }
+
+
