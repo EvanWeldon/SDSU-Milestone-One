@@ -2,13 +2,14 @@
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
-canvas.width = 1024
-canvas.height = 576
-
+canvas.width = 2000
+canvas.height = 2000
 
 // creating a const for the level one map and importing the source
-const mapLevelOne = new Image()
-mapLevelOne.src = './img/mazeLevle1.png'
-console.log(image)
+const map1 = new Image()
+map1.src = './img/map1.png'
+console.log(map1)
 
-context.drawImage()
+map1.onload = () => {
+    context.drawImage(map1, 0, 0)
+}
