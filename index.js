@@ -8,16 +8,36 @@ canvas.height = 720
 // creating a const for the level one map and player and importing the sources
 const map1 = new Image()
 map1.src = './img/map1.png'
+
 const player = new Image()
 player.src = './img/player.png'
 
+//new class to create a constructor method for the imagages I want to manipulate movement on
+class Phil {
+    constructor({position, image }) {
+        this.position = position
+        this.image = image
+    }
 
-// arrow function to render the map onload *image is fit to canvas height and width by passing in more arguments* 
-//having trouble placing the player in correct spot so just threw him in the middle of canvas for now
-map1.onload = () => {
-    context.drawImage(map1, 0, 0, canvas.width, canvas.height)
+    create() {
+        context.drawImage(this.image, 0, 0, canvas.width, canvas.height)
+    }
+}
+
+const map01 = new Phil ({position:{
+    x:0,
+    y:0
+},
+image: map1
+})
+
+// put everything into a movement function so that I could just infinite loop the drawing of the map and player to be able to manipulate "movenemt" on event listeners
+function movement () {
+    window.requestAnimationFrame(movement)
+    map01.create ()
     context.drawImage(player, canvas.width / 2, 0)
 }
+movement()
 
 //learning how switch case works with event listeners
 window.addEventListener('keydown', (event) => {
