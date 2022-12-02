@@ -11,6 +11,7 @@ map1.src = './img/map1.png'
 const player = new Image()
 player.src = './img/player.png'
 
+
 // arrow function to render the map onload *image is fit to canvas height and width by passing in more arguments* 
 //having trouble placing the player in correct spot so just threw him in the middle of canvas for now
 map1.onload = () => {
@@ -18,4 +19,21 @@ map1.onload = () => {
     context.drawImage(player, canvas.width / 2, 0)
 }
 
+//learning how switch case works with event listeners
+window.addEventListener('keydown', (event) => {
+    switch (event.key){
+        case 'w':
+        console.log('i pressed w')
+        break
+        case 's'
+        :console.log('i pressed s')  
+        break     
+        case 'a'
+        :console.log('i pressed a')  
+        break
+        case 'd'
+        :console.log('i pressed d')  
+        break                           
+}
 
+})
