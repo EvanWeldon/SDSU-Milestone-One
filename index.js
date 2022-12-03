@@ -20,22 +20,43 @@ class Phil {
     }
 
     create() {
-        context.drawImage(this.image, 0, 0, canvas.width, canvas.height)
+        context.drawImage(this.image, 0, 0, this.position.x, this.position.y)
     }
 }
 
 const map01 = new Phil ({position:{
-    x:0,
-    y:0
+    x:1000,
+    y:500
 },
 image: map1
 })
 
+const keyPress = {
+    w: {
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+
+}
 // put everything into a movement function so that I could just infinite loop the drawing of the map and player to be able to manipulate "movenemt" on event listeners
 function movement () {
     window.requestAnimationFrame(movement)
     map01.create ()
     context.drawImage(player, canvas.width / 2, 0)
+
+   if (keyPress.w.pressed) {
+    map01.position.y = map01.position.y - 5
+    console.log(map01.position.y)
+   }
+
 }
 movement()
 
@@ -43,17 +64,33 @@ movement()
 window.addEventListener('keydown', (event) => {
     switch (event.key){
         case 'w':
-        console.log('i pressed w')
+        keyPress.w.pressed = true
         break
         case 's'
-        :console.log('i pressed s')  
+        :keyPress.s.pressed = true  
         break     
         case 'a'
-        :console.log('i pressed a')  
+        :keyPress.a.pressed = true  
         break
         case 'd'
-        :console.log('i pressed d')  
+        :keyPress.d.pressed = true
         break                           
 }
+})
 
+window.addEventListener('keyup', (event) => {
+    switch (event.key){
+        case 'w':
+        keyPress.w.pressed = false
+        break
+        case 's'
+        :keyPress.s.pressed = false 
+        break     
+        case 'a'
+        :keyPress.a.pressed = false
+        break
+        case 'd'
+        :keyPress.d.pressed = false
+        break                           
+}
 })
