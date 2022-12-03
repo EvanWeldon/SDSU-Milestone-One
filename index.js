@@ -1,96 +1,97 @@
-// creating the canvas for the games map and rendering it to 2d and setting it to dimensions that render on most screens
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
 canvas.width = 1280
 canvas.height = 720
 
-// creating a const for the level one map and player and importing the sources
 const map1 = new Image()
 map1.src = './img/map1.png'
+
 
 const player = new Image()
 player.src = './img/player.png'
 
 //new class to create a constructor method for the imagages I want to manipulate movement on
-class Phil {
-    constructor({position, image }) {
+class Animate {
+    constructor({ position, image }) {
         this.position = position
         this.image = image
     }
 
     create() {
-        context.drawImage(this.image, 0, 0, this.position.x, this.position.y)
+        context.drawImage(this.image, this.position.x, this.position.y)
     }
 }
-
-const map01 = new Phil ({position:{
-    x:1000,
-    y:500
-},
-image: map1
+const player1 = new Animate({
+    position: {
+        x: 100,
+        y: 250
+    },
+    image: player
 })
 
-const keyPress = {
-    w: {
-        pressed: false
-    },
-    s: {
-        pressed: false
-    },
-    a: {
-        pressed: false
-    },
-    d: {
-        pressed: false
-    }
 
+const keyPress = {
+    wpressed: false,
+    spressed: false,
+    dpressed: false,
+    apressed: false
 }
 // put everything into a movement function so that I could just infinite loop the drawing of the map and player to be able to manipulate "movenemt" on event listeners
-function movement () {
-    window.requestAnimationFrame(movement)
-    map01.create ()
-    context.drawImage(player, canvas.width / 2, 0)
-
-   if (keyPress.w.pressed) {
-    map01.position.y = map01.position.y - 5
-    console.log(map01.position.y)
-   }
-
+function move() {
+    window.requestAnimationFrame(move)
+    player1.create()
+    // context.drawImage(map1, 0, 0, canvas.width, canvas.height)
 }
-movement()
+move()
+
+function changePosition() {
+    if (keyPress.wpressed) {
+        player1.position.y = player1.position.y + 3
+    }
+    if (keyPress.spressed) {
+        player1.position.y = player1.position.y - 3
+    }
+    if (keyPress.apressed) {
+        player1.position.x = player1.position.x - 3
+    }
+    if (keyPress.dpressed) {
+        player1.position.x = player1.position.x + 3
+    }
+}
 
 //learning how switch case works with event listeners
 window.addEventListener('keydown', (event) => {
-    switch (event.key){
+    switch (event.key) {
         case 'w':
-        keyPress.w.pressed = true
-        break
+            keyPress.wpressed = true
+            break
         case 's'
-        :keyPress.s.pressed = true  
-        break     
+            : keyPress.spressed = true
+            break
         case 'a'
-        :keyPress.a.pressed = true  
-        break
+            : keyPress.apressed = true
+            break
         case 'd'
-        :keyPress.d.pressed = true
-        break                           
-}
+            : keyPress.dpressed = true
+    }
+    changePosition ()
 })
 
+
 window.addEventListener('keyup', (event) => {
-    switch (event.key){
+    switch (event.key) {
         case 'w':
-        keyPress.w.pressed = false
-        break
+            keyPress.wpressed = false
+            break
         case 's'
-        :keyPress.s.pressed = false 
-        break     
+            : keyPress.spressed = false
+            break
         case 'a'
-        :keyPress.a.pressed = false
-        break
+            : keyPress.apressed = false
+            break
         case 'd'
-        :keyPress.d.pressed = false
-        break                           
-}
+            : keyPress.dpressed = false
+            break
+    }
 })
