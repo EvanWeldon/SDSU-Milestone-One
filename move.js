@@ -4,6 +4,7 @@ function move(element) {
     function moveToChoordinates(left, bottom) {
         element.style.position = left + 'px'
         element.style.bottom = bottom + 'px'
+        
     }
 
     return {

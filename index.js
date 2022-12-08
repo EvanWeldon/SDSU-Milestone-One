@@ -6,15 +6,25 @@ canvas.height = 720
 
 const character = newImage('./img/player.png')
 let direction = null;
-let x = 100;
-let y = 250;
+let x = 150;
+let y = 600;
 
-const map1 = newImage('./img/map1.png')
-let position = null;
+const map1 = new Image()
+map1.src = './img/sdsuMazeGameMap.png'
+
+map1.onload = () => {
+    context.drawImage(map1, 0, 0,)
+    boundary.forEach ( Perimeter => {
+        Perimeter.create()
+    })
+}
+
+ // function that calls true or false for locations of no go zones before I change it
+
 
 setInterval (function moveCharacter (){
     if(direction === 'west') {
-    x = x - 1
+        x = x - 1
     }
     if(direction === 'north') {
     y = y + 1
@@ -28,6 +38,8 @@ setInterval (function moveCharacter (){
     character.style.left = x + 'px'
     character.style.bottom = y + 'px'
 }, 1)
+
+
 
 document.addEventListener ('keydown', function (e) {
     if(e.repeat) return;
