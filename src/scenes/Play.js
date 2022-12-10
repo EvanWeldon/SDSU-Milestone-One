@@ -1,6 +1,7 @@
 
 import Phaser from "phaser";
 import Player from '../sprites/Player';
+import Enemy from '../sprites/Enemy';
 
 class Play extends Phaser.Scene {
 
@@ -12,9 +13,23 @@ class Play extends Phaser.Scene {
     const map = this.createMap();
     const layers = this.createLayers(map);
     const player = this.createPlayer();
+    const enemy = this.createEnemy();
 
-    this.physics.add.collider(player, layers.platform);
-    }
+
+    this.createEnemyCollider(enemy, {
+        colliders: {
+        platform : layers.platform
+        }
+    });
+
+
+    
+    this.createPlayerCollider(player, {
+        colliders: {
+        platform : layers.platform
+        }
+    });
+}
 
     createMap() {
         const map = this.make.tilemap({key:'map'});
@@ -39,6 +54,19 @@ class Play extends Phaser.Scene {
         return new Player(this, 100, 250,);
     }
 
+    createEnemy() {
+        return new Enemy (this, 200, 200,);
+    }
+
+    createEnemyCollider(enemy, {colliders}) {
+        enemy
+        .addCollider(colliders.platform);
+    }
+
+    createPlayerCollider(player, {colliders}) {
+        player
+        .addCollider(colliders.platform);
+    }
 }
 
 
