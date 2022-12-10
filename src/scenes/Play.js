@@ -14,7 +14,17 @@ class Play extends Phaser.Scene {
 
     map.createStaticLayer('background', tileset1 );
     map.createStaticLayer('platform', tileset2 );
+    this.createPlayer();
+    }
+
+    createPlayer() {
+        const player = this.physics.add.sprite(100, 250, 'player')
+        player.body.setGravity(500);
     }
 }
+
+
+
+
 
 export default Play; 

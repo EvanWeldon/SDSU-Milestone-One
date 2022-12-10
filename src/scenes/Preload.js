@@ -11,6 +11,7 @@ class Preload extends Phaser.Scene {
     this.load.tilemapTiledJSON('map', 'assets/map.json');
     this.load.image('ts-background', 'assets/Blue.png');
     this.load.image('ts-platform', 'assets/Terrain.png');
+    this.load.image('player', 'assets/player/Jump.png');
     }
 
     create() {
