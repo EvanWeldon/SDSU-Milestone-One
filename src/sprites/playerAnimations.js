@@ -17,7 +17,7 @@ export default anims => {
     })
     
     anims.create({
-        key: 'run',
+        key: 'jump',
         frames: anims.generateFrameNames('player', {start:6, end:8}),
         frameRate: 20,
         repeat: -1

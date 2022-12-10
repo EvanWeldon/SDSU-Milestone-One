@@ -12,16 +12,19 @@ class Play extends Phaser.Scene {
     create() {
     const map = this.createMap();
     const layers = this.createLayers(map);
-    const player = this.createPlayer();
-    const enemy = this.createEnemy();
+    const playerZones = this.getPlayerZones(layers.playerZones);
+    const player = this.createPlayer(playerZones.start);
+    const enemies = this.createEnemies(layers.enemySpawns);
 
 
-    this.createEnemyCollider(enemy, {
+    this.createEnemyCollider(enemies, {
         colliders: {
         platform : layers.platform,
         player
         }
     });
+
+    this.createEndOfGame(playerZones.end, player) 
 
 
     
@@ -44,30 +47,60 @@ class Play extends Phaser.Scene {
         const tileset2 = map.getTileset('terrain');
         const background = map.createStaticLayer('background', tileset1 );
         const platform = map.createStaticLayer('platform', tileset2 );
+        const playerZones = map.getObjectLayer('playerZone');
+        const enemySpawns = map.getObjectLayer('enemySpawn');
 
         platform.setCollisionByExclusion(-1, true);
 
         
-        return {background, platform};
+        return {background, platform, playerZones,  enemySpawns};
     }
 
-    createPlayer() {
-        return new Player(this, 100, 250,);
+    createPlayer(start) {
+        return new Player(this, start.x, start.y);
     }
 
-    createEnemy() {
-        return new Enemy (this, 200, 200,);
+    createEnemies(spawnLayer) {
+
+        return spawnLayer.objects.map(spawnPoint => {
+            return new Enemy (this, spawnPoint.x, spawnPoint.y);
+        })
+
+       
     }
 
-    createEnemyCollider(enemy, {colliders}) {
-        enemy
-        .addCollider(colliders.platform)
-        .addCollider(colliders.player)
+    createEnemyCollider(enemies, {colliders}) {
+        enemies.forEach(enemy => {
+            enemy
+            .addCollider(colliders.platform)
+            .addCollider(colliders.player)
+        })
+
     }
 
     createPlayerCollider(player, {colliders}) {
         player
         .addCollider(colliders.platform);
+    }
+
+    getPlayerZones(playerZonesLayers) {
+        const playerZones = playerZonesLayers.objects;
+        return {
+            start: playerZones.find(zone => zone.name === 'startZone'),
+            end: playerZones.find(zone => zone.name === 'endZone' )
+        }
+    }
+
+    createEndOfGame(end, player) {
+        const endOfGame = this.physics.add.sprite(end.x, end.y, 'end')
+         .setSize(5, 100)
+         .setOrigin(1, 0);
+
+
+        const endOverlap = this.physics.add.overlap(player, endOfGame, () => {
+            endOverlap.active = false;
+            console.log('You Have Won the Game!')
+        })   
     }
 }
 
