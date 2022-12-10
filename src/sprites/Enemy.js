@@ -20,6 +20,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.gravity = 500;
         this.speed = 200;
         this.body.setGravityY(500);
+        this.setSize(this.width - 20, this.height - 20);
         this.setCollideWorldBounds(true);
         this.setImmovable(true);
         this.setOrigin(0.5, 1);
