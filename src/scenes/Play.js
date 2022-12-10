@@ -18,7 +18,8 @@ class Play extends Phaser.Scene {
 
     this.createEnemyCollider(enemy, {
         colliders: {
-        platform : layers.platform
+        platform : layers.platform,
+        player
         }
     });
 
@@ -60,7 +61,8 @@ class Play extends Phaser.Scene {
 
     createEnemyCollider(enemy, {colliders}) {
         enemy
-        .addCollider(colliders.platform);
+        .addCollider(colliders.platform)
+        .addCollider(colliders.player)
     }
 
     createPlayerCollider(player, {colliders}) {
