@@ -18,9 +18,26 @@ class Preload extends Phaser.Scene {
         this.load.image('bg', 'assets/background.png');
         this.load.image('sprite' , 'assets/sprite.png');
         this.load.image('pipe', 'assets/pipe.png');
+
+        const isProd = process.env.FB_ENV || process.env.NODE_ENV === 'production';
+
+        this.load.on('progress', value => {
+            isProd && FBInstant.setLoadingProgress(value * 100);
+        })
+
+        this.load.once('complete', () => {
+            if(isProd) {
+                  FBInstant.startGameAsync().then(() => {
+                this.startGame();
+                })
+            } else {
+                this.startGame();
+            }
+          
+        })
     }
 
-    create () {
+    startGame() {
         this.scene.start('start');
     }
 
