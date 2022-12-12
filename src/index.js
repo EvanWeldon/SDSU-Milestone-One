@@ -1,31 +1,48 @@
 
-import Phaser from 'phaser';
 
-import Play from './scenes/Play';
+//index page to import all of the needed phaser pages, create a canvas and order the pages to be loaded in correct sequence
+import Phaser from "phaser";
+import Play from "./scenes/Play";
+import Start from "./scenes/Start";
+import Preload from "./scenes/Preload";
 
-const WIDTH = 1600;
+const WIDTH = 800;
 const HEIGHT = 600;
+const SPRITE_POSITION = {x: WIDTH / 10, y: HEIGHT /2 }
 
 const SHARED_CONFIG = {
   width: WIDTH,
   height: HEIGHT,
+  startPosition: SPRITE_POSITION
 }
 
-const Scenes = [Play];
-const createScene = Scene => new Scene(SHARED_CONFIG)
-const initScenes = () => Scenes.map(createScene)
+
+//arrow function to iterate through all of the scenes creating a new scene for each instance to be called below in the scene call
+const Scenes = [Preload, Start, Play];
+
+const createScenes = () => Scenes.map((Scene) => new Scene(SHARED_CONFIG))
 
 const config = {
   type: Phaser.AUTO,
   ...SHARED_CONFIG,
-  pixelArt: true,
   physics: {
     default: 'arcade',
     arcade: {
-      // debug: true,
+     //can uncomment this if i ever come back to it and re ad the debugger debug: true
     }
   },
-  scene: initScenes()
+  scene: createScenes()
+
 }
+
+
+
+
+
+
+
+
+
+
 
 new Phaser.Game(config);
